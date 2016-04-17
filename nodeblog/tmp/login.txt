@@ -1,0 +1,49 @@
+login
+
+- only one login screen for authors and admin.
+- the login page should automatically know if the user is author or admin.
+- first, there will always be one admin.
+- once the user puts in his username and password, the database returns if the user is either admin or author.
+
+Table structure for users table
+id
+username
+password
+role
+first_name
+last_name
+
+
+- the role is checked if it is author or admin
+- render page according to role
+
+
+// res.render('index', { role: 'admin' }
+ jade example
+
+ - since you have role atttribute in jade
+
+if(role === 'admin')
+	li
+	 a(href='/posts/admin') Add Admin
+
+
+
+-- each post edit example
+-- eg. a(href="posts/edit/:id")
+// res.render('index', { role: 'admin', author: username }
+
+	each post, i in posts
+			.post
+					h1
+						a(href='posts/show/#{post._id}')
+							=post.title
+					p.meta Posted in
+						a(href='/categories/show/#{post.category}') #{post.category} by #{post.author} on #{moment(post.date).format('MM-DD-YYYY')}
+
+					if(post.author === author)
+						a(href="posts/edit/#{post._id}") Edit
+
+					img(src='/images/uploads/#{post.mainimage}')
+					!=truncateText(post.body, 400)
+					a.more(href='/posts/show/#{post._id}') Read More

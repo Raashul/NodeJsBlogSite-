@@ -1,0 +1,20 @@
+
+posts/edit/:id
+
+
+
+- query param to get id
+- call mongodb to get information by id
+- fetch id and pass it to render
+
+var myid = req.params.id;
+
+posts.find({ _id: myid }, {}, function(err, posts){
+    res.render('edit',{
+      "posts": posts
+    });
+  });
+
+
+the post variables are now available in jade
+

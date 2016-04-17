@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h1=title
+  ul.errors
+    if errors
+      each error, i in errors
+        li.alert.alert-danger #{error.msg}
+  form(method='post', action='/categories/add')
+    .form-group
+      label(for='title') Category
+      input#username.form-control(type='text', name='title')
+
+    input#signupButton.btn.btn-success.form-control(type='submit', value='Add Category', name='submit')

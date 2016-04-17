@@ -1,0 +1,34 @@
+doctype html
+html
+	head
+		title NodeBlog
+		link(rel='stylesheet', href='/stylesheets/style.css')
+	body
+		.container
+			img.logo(src='/images/logo.png')
+			if !user
+				a.loginButton(href='/login') Log In / Sign Up
+			p #{role}
+			p #{name}
+			nav
+				ul
+					li
+						a(href='/home') Home
+					if user
+						li
+							a(href='/posts/add') Add post
+					if user
+						li
+							a(href='/categories/add') Add Categories
+					if user
+						if user.role == 'Admin'
+							li
+								a(href='/addAdmin') Add Admin
+					if user
+						li.logout
+							a(href='/logout') Logout
+
+			!= messages()
+			block content
+			footer
+			p NodeBlog &copy; 2016
