@@ -55,8 +55,27 @@ router.get('/edit/:id', function(req, res,next){
 });
 
 
+//Edit Post get request.
+router.get('/edit/:id', function(req, res,next){
+	var posts =db.get('posts');
+	var categories = db.get('categories');
+
+	posts.findById(req.params.id, function(err, post){
+		res.render('editpost', {
+			'post': post
+			});
+	});
+	categories.find({}, {}, function(err, categories){
+		res.render('addpost', {
+		'title': 'Add Post',
+		'categories': categories
+		});
+	});
+});
+
+
 //Form submit for Edit post
-router.post('/edit', type, function(req, res){
+router.post('/edit/:id', type, function(req, res){
 
 	var title     = req.body.title;
 	var category  = req.body.category;
@@ -110,36 +129,44 @@ router.post('/edit', type, function(req, res){
 	}
 
 	else{
-
 		var posts = db.get('posts');
 
-		console.log("Reading database");
-		//Submit to db
-		posts.update({
-				_id: posts._id
-			},
-			{
-				title: title,
-				body: body,
-				category: category,
-				date: date,
-				author: author,
-				mainimage: mainImageName
-		}, function(err, post){
+		posts.findById(req.params.id, function(err, post){
+
+			console.log(req.params.id);
+			console.log("Reading database");
 			if(err){
-				res.send('There was an issue submitting the post');
-			} else{
-				console.log('success');
-				req.flash('success', 'Post Edited');
-				res.location('/home');
-				res.redirect('/home');
-				console.log("End here");
+				req.flash("Error here");
+				console.log("Not found");
+			}else{
+				//Submit to db
+					posts.update({
+							_id: req.params.id
+						},
+						{
+							title: title,
+							body: body,
+							category: category,
+							date: date,
+							author: author,
+							mainimage: mainImageName
+					}, function(err, post){
+						if(err){
+							res.send('There was an issue submitting the post');
+						} else{
+							console.log('success');
+							req.flash('success', 'Post Edited');
+							res.location('/home');
+							res.redirect('/home');
+							console.log("End here");
+						}
+					})
 			}
+
 		});
+
 	}
-	});
-
-
+});
 
 
 		//Form submit from Add post.
