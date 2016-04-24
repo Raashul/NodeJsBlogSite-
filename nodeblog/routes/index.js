@@ -75,7 +75,7 @@ router.post('/addAdmin', function(req, res){
       res.redirect('addAdmin');
     }
           else{
-             users.update({username: adminusername},{ role: 'Admin'}, function(err, users){
+             users.update({username: adminusername},{ "$set": { role: 'Admin'}}, function(err, users){
           if(err){
             res.send('There was an issue submitting the post');
           }else{

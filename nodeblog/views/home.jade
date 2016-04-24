@@ -11,7 +11,7 @@ block content
 				if user.role == "Admin"
 					a.editButton(href='posts/edit/#{post._id}') Edit Post
 			p.meta Posted in
-				a(href='/categories/show/#{post.category}') #{post.category} by #{post.author} on #{moment(post.date).format('MM-DD-YYYY')}
+				#{post.category} by #{post.author} on #{moment(post.date).format('MM-DD-YYYY')}
 			img(src='/images/uploads/#{post.mainimage}')
 			!=truncateText(post.body, 400)
 			a.more(href='/posts/show/#{post._id}') Read More
