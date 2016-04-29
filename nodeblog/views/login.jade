@@ -19,6 +19,12 @@ html
     height: 40px;
     text-align: center;
     }
+    .loginerror{
+    margin-top: -50px;
+    margin-bottom: 0px;
+    list-style-type: none;
+    }
+
   body
     nav.navbar.navbar-default.navbar-fixed-top
       .container-fluid
@@ -37,6 +43,10 @@ html
             input.btn.btn-primary(type='submit', name='submit', value='Log In')
     .container
       form.signupForm(method='post' action='/dashboard')
+        if message
+        each error, i in message
+          ul.loginerror
+            li.alert.alert-danger #{message}
         .form-group
           label(for='Username') Username
           input#username.form-control(type='text', placeholder='My name' name='username')

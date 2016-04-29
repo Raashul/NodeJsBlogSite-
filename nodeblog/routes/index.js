@@ -103,8 +103,10 @@ router.get('/login', function(req, res){
     console.log('reached success');
     // If this function gets called, authentication was successful.
     // `req.user` contains the authenticated user.
+
     req.flash('success', 'You are now logged in');
     res.redirect('/home');
+
   });
 
 
@@ -128,17 +130,20 @@ passport.use(new LocalStrategy(function(username, password, done){
     console.log(username);
     if(err) throw err;
     if(!user){
-      return done(null, false, {message:'Incorrect User'});
+       console.log("No user reached");
+      return done(null, false, {message:'No User was found. Try Signing up'});
     }
     User.comparePassword(password, user.password, function(err, isMatch){
-      if (err) { return done(err); }
+      if (err) {
+        return done(err);
+       }
       if (isMatch) {
          console.log("is matched called");
         return done(null, user);
       }
       else{
-        return done(null, false, {message: 'Invalid password'});
-        console.log("failureFlash");
+         console.log("failureFlash");
+        return done(null, false, {message: 'Invalid password. Try Again?'});
       }
     });
   });
@@ -259,7 +264,6 @@ router.post('/dashboard', function(req,res) {
             req.flash('success', 'You are now registered and may log in');
             console.log("Testing");
         }
-        res.location('/home');
         res.redirect('/home');
       //});
     //})
@@ -267,8 +271,8 @@ router.post('/dashboard', function(req,res) {
 //});
 
 router.get('/logout', function(req,res){
-  req.logout();
   req.flash('success', 'You are now logged out');
+  req.logout();
   res.redirect('/login');
 });
 

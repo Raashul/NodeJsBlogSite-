@@ -10,13 +10,10 @@ block content
 			if user
 				if user.role == "Admin"
 					a.editButton(href='posts/edit/#{post._id}') Edit Post
-			p.meta Posted in
-				#{post.category} by #{post.author} on #{moment(post.date).format('MM-DD-YYYY')}
-			img(src='/images/uploads/#{post.mainimage}')
+			p.meta Posted in #{post.category} by #{post.author} on #{moment(post.date).format('MM-DD-YYYY')}
+			img(src='/images/upload	s/#{post.mainimage}')
 			!=truncateText(post.body, 400)
-			a.more(href='/posts/show/#{post._id}') Read More
-
-
+		a.more(href='/posts/show/#{post._id}') Read More
 	else
 		p.noposts There are no posts to display
 
