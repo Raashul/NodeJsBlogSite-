@@ -56,38 +56,36 @@ router.post('/addAdmin', function(req, res){
   var errors = req.validationErrors();
 
   if(errors){
-    console.log(errors);
-    res.render('addAdmin', {
-      "errors": errors,
-      "adminusername": adminusername
-    });
+    res.send("Go back and enter a username");
+
   }
 
-  users.findOne({'username': adminusername}, function(err, user){
-    if(err){
-      req.flash("No username was found. Go Back to site and enter a valid username");
-      res.location('/addAdmin');
-      res.redirect('/addAdmin');
-    }
-    if(!user){
-      res.send("No username was found.Go Back to site and enter a valid username");
-      res.location('/addAdmin');
-      res.redirect('addAdmin');
-    }
-          else{
-             users.update({username: adminusername},{ "$set": { role:  'Admin'}}, function(err, users){
-          if(err){
-            res.send('There was an issue submitting the post');
-          }else{
-            req.flash('success', 'Admin Added');
-            res.location('/home');
-            res.redirect('/home');
+  else{
+    users.findOne({'username': adminusername}, function(err, user){
+      if(err){
+        res.send("No username was found.Go Back to site and enter a valid username");
+      }
+      else if(!user){
+        res.send("No username was found.Go Back to site and enter a valid username");
+      }
+      else{
+        users.update({username: adminusername},{ "$set": { role:  'Admin'}}, function(err, users){
+        if(err){
+        res.send('There was an issue submitting the post');
+        } else{
+          req.flash('success', 'Admin Added');
+          res.location('/home');
+          res.redirect('/home');
           }
       });
           }
-        })
+    })
 
-  })
+}
+
+});
+
+
 
 
       //Login Page get request
@@ -204,15 +202,20 @@ router.post('/dashboard', function(req,res) {
 */
 
   if(errors){
-    console.log(errors);
-    req.flash('error', errors)
+    console.log("error method");
+    console.log(errors[0].msg);
+   // var message = JSON.stringify(errors);
+   // console.log(message);
     res.render('login',{
+      message: errors[0].msg,
       errors: errors,
       username: username,
       emai: email,
       password: password,
       password2: password2
     });
+
+    console.log("Error method finished");
   }
 
   /*

@@ -3,9 +3,9 @@ extends layout
 block content
 	h1=title
 	ul.errors
-		if errors
-			each error, i in errors
-				li.alert.alert-danger #{error.msg}
+		if message
+			each error, i in message
+				li.alert.alert-danger #{error}
 	form(method='post', action='/addAdmin')
 		.form-group
 			label Username:

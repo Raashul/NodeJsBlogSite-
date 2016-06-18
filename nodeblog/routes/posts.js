@@ -6,7 +6,7 @@ var db = require('monk')('localhost/nodeblog');
 var multer = require('multer');
 
 
- var signup = db.get('signup');
+var signup = db.get('signup');
 var upload = multer({
  	dest: './public/images/uploads',
  	limits: {fileSize: 1000000, files:1},
@@ -57,7 +57,7 @@ router.get('/edit/:id', function(req, res,next){
 
 //Edit Post get request.
 router.get('/edit/:id', function(req, res,next){
-	var posts =db.get('posts');
+	var posts =	db.get('posts');
 	var categories = db.get('categories');
 
 	posts.findById(req.params.id, function(err, post){

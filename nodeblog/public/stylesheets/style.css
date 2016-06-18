@@ -74,6 +74,10 @@ nav a.current, nav a:hover{
 	color: #000;
 }
 
+.mainimage{
+	width: 100%;
+}
+
 .meta{
 	padding: 7px;
 	border:1px solid #ccc;
@@ -135,6 +139,7 @@ textarea{
 	border-radius: 4px;
 	list-style: none;
 }
+
 
 .alert-danger{
 	color: #a94442;
@@ -211,10 +216,6 @@ a.editButton{
 	float: right;
 	margin-bottom: 20px;
 }
-
-
-
-
 
 
 

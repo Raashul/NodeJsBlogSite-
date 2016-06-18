@@ -109,21 +109,25 @@ app.use(passport.session());
     next();
   });
 
-  app.use('/', routes);
-  app.use('/posts', posts);
-  app.use('/categories', categories);
 
-  app.get('posts/add', function(req, res){
-    var categories = db.get('categories');
-    categories.find({}, {}, function(err, categories){
-      res.render('addpost', {
-      'title': 'Add Post',
-      'categories': categories
-      });
-    });
+   //Route files
+        app.use('/', routes);
+        app.use('/posts', posts);
+        app.use('/categories', categories);
 
-    console.log("step one");
-  });
+        app.get('posts/add', function(req, res){
+          var categories = db.get('categories');
+          categories.find({}, {}, function(err, categories){
+            res.render('addpost', {
+            'title': 'Add Post',
+            'categories': categories
+            });
+          });
+
+          console.log("step one");
+        });
+
+
 
   // catch 404 and forward to error handler
   app.use(function(req, res, next) {
