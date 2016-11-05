@@ -8,7 +8,7 @@ var db = mongoose.connection;
 var UserSchema = mongoose.Schema({
 
 	name: {
-		type: Strving,
+		type: String,
 		index: true },
 
 		password: {

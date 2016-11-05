@@ -84,15 +84,9 @@ router.post('/edit/:id', type, function(req, res){
 	var date 	  = new Date();
 	//var id			= req.params.id;
 
-	//console.log(id);
-
-
-	console.log(req.params.id);
-	console.log("Read data from form");
-
 
 	if(req.file){
-		console.log("step three");
+		
 		var mainImageOriginalImage		= req.file.originalname;
 		var mainImageName 				= req.file.filename;
 		var mainImageMime				= req.file.mimetype;
@@ -102,30 +96,27 @@ router.post('/edit/:id', type, function(req, res){
 
 	} else{
 		var mainImageName = 'noimage.png';
-		 console.log("User didnt send any image");
-		 console.log(body);
+		
 	}
 
 	//Form validation
 	req.checkBody('title', 'Title field is required').notEmpty();
 	req.checkBody('body', 'Body field is required');
 
-	console.log(mainImageName);
-	console.log(req.file);
-	//console.log(req.file.filename);
+	
+	
 
 	//Check Errors
 	var errors = req.validationErrors();
 
 	if(errors){
-		console.log("There were errors");
-		console.log(errors);
+		
 		res.render('editpost', {
 			"errors": errors,
 			"title": title,
 			"body": body
 		});
-		console.log("step five");
+		
 	}
 
 	else{
@@ -133,11 +124,10 @@ router.post('/edit/:id', type, function(req, res){
 
 		posts.findById(req.params.id, function(err, post){
 
-			console.log(req.params.id);
-			console.log("Reading database");
+			
 			if(err){
 				req.flash("Error here");
-				console.log("Not found");
+				
 			}else{
 				//Submit to db
 					posts.update({
@@ -154,11 +144,11 @@ router.post('/edit/:id', type, function(req, res){
 						if(err){
 							res.send('There was an issue submitting the post');
 						} else{
-							console.log('success');
+							
 							req.flash('success', 'Post Edited');
 							res.location('/home');
 							res.redirect('/home');
-							console.log("End here");
+							
 						}
 					})
 			}
@@ -178,11 +168,11 @@ router.post('/add', type, function(req, res){
 	var author    = req.body.author;
 	var date 	  = new Date();
 
-	console.log("Read data from form");
+	
 
 
 	if(req.file){
-		console.log("step three");
+		
 		var mainImageOriginalImage		= req.file.originalname;
 		var mainImageName 				= req.file.filename;
 		var mainImageMime				= req.file.mimetype;
@@ -192,36 +182,33 @@ router.post('/add', type, function(req, res){
 
 	} else{
 		var mainImageName = 'noimage.png';
-		 console.log("User didnt send any image");
+		 
 	}
 
 	//Form validation
 	req.checkBody('title', 'Title field is required').notEmpty();
 	req.checkBody('body', 'Body field is required');
 
-	console.log(mainImageName);
-	console.log(req.file);
-	//console.log(req.file.filename);
+	
 
 	//Check Errors
 	var errors = req.validationErrors();
 
 	if(errors){
-		console.log("There were errors");
-		console.log(errors);
+		
 		res.render('addpost', {
 			"errors": errors,
 			"title": title,
 			"body": body
 		});
-		console.log("step five");
+		
 	}
 
 	else{
 
 		var posts = db.get('posts');
 
-		console.log("Reading database");
+		
 		//Submit to db
 		posts.insert({
 			"title": title,
@@ -248,7 +235,7 @@ router.post('/add', type, function(req, res){
 router.post('/addcomment', function(req, res){
 
 	if (!req.user){
-		console.log('no user');
+	
 		req.flash('error', 'Please log in to comment in the post');
 		res.location('/login');
 		res.redirect('/login');
@@ -271,8 +258,7 @@ router.post('/addcomment', function(req, res){
 	var errors = req.validationErrors();
 
 	if(errors){
-		console.log("There were errors");
-		console.log(errors);
+		
 		var posts = db.get('post');
 		posts.findById(postid,function(err,post){
 			res.render('show', {
